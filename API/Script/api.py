@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 access_token = "token*"
 
-project = 'Hextris/hextris'
+project = 'phadej/github'
 
 def extract_project_commits(project_full_name):
     df_commits = pd.DataFrame()
@@ -15,22 +15,19 @@ def extract_project_commits(project_full_name):
         try:
             g = Github(access_token, per_page=100, retry=20)
             repo = g.get_repo(project_full_name)
-            commits = repo.get_commits()
+            contributors = repo.get_contributors()
             counter = 0
-            print(commits.totalCount)
+            print(contributors.totalCount)
             
-            for commit in commits:
+            for contributor in contributors:
                 while True:
                     try:
                         counter += 1
                         print(f"Loop counter {counter}")
                         print(g.rate_limiting)
                         df_commits = df_commits.append({
-                        'commit_sha': commit.sha,
-                        'committer_username': commit.author.login if commit.author is not None else '',
-                        'committer_name': commit.author.name if commit.author is not None else '',
-                        'committer_email': commit.author.email if commit.author is not None else '',
-                        'commit_date': commit.author.created_at if commit.author is not None else '',
+                        'contributor_username': contributor.login if contributor.login is not None else '',
+                        'contributor_commits': repo.get_commits(author = contributor.login).totalCount
                         }, ignore_index = True)
                     except RateLimitExceededException as e:
                         print(e.status)
