@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import time
 from datetime import datetime
-access_token = "e4a2d4c4b77125664e1414f866a31b1adc853f56"
+access_token = "3bf764e3bfaf1354fe4fd687cdef1d6a1c2d4412"
 
 project = 'phadej/github'
 
@@ -85,7 +85,7 @@ def extract_project_commits(project_full_name):
             time.sleep(10)
             continue
         break
-    df_commits.to_csv(r'Dataset\dataset.csv', sep=',', encoding = 'utf-8', index = True)
+    df_commits.to_csv(r"API-Visualization\API\Dataset\dataset.csv", sep=',', encoding = 'utf-8', index = True)
     
 if __name__ == "__main__":
     extract_project_commits(project)
