@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import time
 from datetime import datetime
-access_token = "bbf1d851b737b6e17b06ed9817edb4da8d6c100f"
+access_token = "5d61623419fcd7d42c875bb6b5a6881659c0f0d8"
 
 project = 'phadej/github'
 
@@ -20,13 +20,13 @@ def extract_project_commits(project_full_name):
             print(contributors.totalCount)
             
             for contributor in contributors:
-                while counter <14:
+                while True:
                     try:
                         counter += 1
                         print(f"Loop counter {counter}")
                         print(g.rate_limiting)
                         df_commits = df_commits.append({
-                        'contributor_username': contributor.login if contributor.login is not None else '',
+                        'contributor_username': contributor.login, 
                         'contributor_commits': repo.get_commits(author = contributor.login).totalCount
                         }, ignore_index = True)
                         df_commits = df_commits[['contributor_username','contributor_commits']]
