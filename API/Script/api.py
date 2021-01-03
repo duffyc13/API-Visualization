@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import time
 from datetime import datetime
-access_token = "3bf764e3bfaf1354fe4fd687cdef1d6a1c2d4412"
+access_token = "bbf1d851b737b6e17b06ed9817edb4da8d6c100f"
 
 project = 'phadej/github'
 
@@ -20,7 +20,7 @@ def extract_project_commits(project_full_name):
             print(contributors.totalCount)
             
             for contributor in contributors:
-                while True:
+                while counter <14:
                     try:
                         counter += 1
                         print(f"Loop counter {counter}")
@@ -29,6 +29,7 @@ def extract_project_commits(project_full_name):
                         'contributor_username': contributor.login if contributor.login is not None else '',
                         'contributor_commits': repo.get_commits(author = contributor.login).totalCount
                         }, ignore_index = True)
+                        df_commits = df_commits[['contributor_username','contributor_commits']]
                     except RateLimitExceededException as e:
                         print(e.status)
                         print('Rate limit exceeded')
@@ -85,7 +86,7 @@ def extract_project_commits(project_full_name):
             time.sleep(10)
             continue
         break
-    df_commits.to_csv(r"API-Visualization\API\Dataset\dataset.csv", sep=',', encoding = 'utf-8', index = True)
+    df_commits.to_csv(r"API-Visualization\API\Dataset\dataset.csv", sep=',', encoding = 'utf-8', index = False)
     
 if __name__ == "__main__":
     extract_project_commits(project)
