@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import time
 from datetime import datetime
-access_token = "5d61623419fcd7d42c875bb6b5a6881659c0f0d8"
+access_token = "*token"
 
 project = 'phadej/github'
 
